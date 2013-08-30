@@ -5,6 +5,40 @@ var settings = new Store("settings", {
 });
 
 
+
+
+
+
+
+
+function scheduleRequest(){
+  window.setTimeout(startRequest, pollInterval);
+}
+
+function startRequest(){
+  getNotificationCount(
+    function(count){
+      // update icon
+      scheduleRequest();
+    },
+    function(){
+      scheduleRequest();
+    }
+  );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 //example of using a message handler from the inject scripts
 chrome.extension.onMessage.addListener(
   function(request, sender, sendResponse) {
