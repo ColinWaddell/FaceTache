@@ -8,15 +8,25 @@ var FaceStache = {
   /*}),*/
 
   settings: {
-    pollInterval: 10 * 1000,
+    pollInterval: 30 * 1000,
     url: "https://www.facebook.com/index.php",
-    nIcons: 5
+    nIcons: 5,
+    beard: "icons/beard.png"
   },
 
   init: function(){
     console.log('init');
+    this.browserActions();
     this.scheduleRequest(0);
   },
+
+
+  browserActions: function(){
+    chrome.browserAction.onClicked.addListener(function(windowId) {
+      chrome.tabs.create({url: this.settings.url});
+    }.bind(this));              
+  },
+
 
   scheduleRequest: function(timeout){
 
@@ -36,6 +46,7 @@ var FaceStache = {
   },
 
   getNotificationCount: function(success, error){
+
     $.get(this.settings.url, 
           success.bind(this), 
           'html')
@@ -43,36 +54,41 @@ var FaceStache = {
   },
 
   getNotificationSuccess: function(data){
-    var count = $(data).find("#notificationsCountValue").html();
+    var count = Number( $(data).find("#notificationsCountValue").html() );
     console.log("You have " + count + " notification." );
-    
+
+    this.setIcon(count);
+    this.scheduleRequest();
+  },
+
+  setIcon: function(count){
+
     count = (count > this.settings.nIcons ? this.settings.nIcons : count);
 
-    path = "icons/beard_" + count + ".png";
-
     var img = new Image();
+    img.count = count;
+
     img.onerror = function() {
         console.error("Could not load icon '" + path + "'.");
     };
     img.onload = function() {
         var canvas = document.createElement("canvas");
-        canvas.width = img.width > 19 ? 19 : img.width;
-        canvas.height = img.height > 19 ? 19 : img.height;
+        canvas.width = img.width; 
+        canvas.height = img.height;
 
         var canvas_context = canvas.getContext('2d');
-        canvas_context.clearRect(0, 0, canvas.width, canvas.height);
-        canvas_context.drawImage(img, 0, 0, canvas.width, canvas.height);
-        var imgData = canvas_context.getImageData(0, 0, canvas.width, canvas.height);
+        canvas_context.clearRect(0, 0, img.width, img.height);
+        canvas_context.drawImage(img, 0 , 0, img.width, img.height);
+        var imgData = canvas_context.getImageData( count*canvas.height , 0, 19, 19);
         chrome.browserAction.setIcon({imageData: imgData});
     };
-    img.src = path;
- 
-    this.scheduleRequest();
+    img.src = this.settings.beard;         
   }
 
 };
 
 FaceStache.init();
+
 
 
 
