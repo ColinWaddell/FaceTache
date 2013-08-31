@@ -9,7 +9,8 @@ var FaceStache = {
 
   settings: {
     pollInterval: 10 * 1000,
-    url: "https://www.facebook.com/index.php"
+    url: "https://www.facebook.com/index.php",
+    nIcons: 5
   },
 
   init: function(){
@@ -23,29 +24,51 @@ var FaceStache = {
       timeout = this.settings.pollInterval;
     }
 
-    window.setTimeout($.proxy(this.startRequest, this), timeout);
+    window.setTimeout(this.startRequest.bind(this), timeout);
        
   },
 
   startRequest: function(){
-    console.log('startRequest');
-
     this.getNotificationCount(
       this.getNotificationSuccess,
       this.scheduleRequest
     );
   },
 
-  getNotificationSuccess: function(data){
-    console.log('getNotificationSuccess');
-
-  },
-
-
   getNotificationCount: function(success, error){
-    $.get(this.settings.url, success, 'html')
+    $.get(this.settings.url, 
+          success.bind(this), 
+          'html')
     .fail(error);
   },
+
+  getNotificationSuccess: function(data){
+    var count = $(data).find("#notificationsCountValue").html();
+    console.log("You have " + count + " notification." );
+    
+    count = (count > this.settings.nIcons ? this.settings.nIcons : count);
+
+    path = "icons/beard_" + count + ".png";
+
+    var img = new Image();
+    img.onerror = function() {
+        console.error("Could not load icon '" + path + "'.");
+    };
+    img.onload = function() {
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width > 19 ? 19 : img.width;
+        canvas.height = img.height > 19 ? 19 : img.height;
+
+        var canvas_context = canvas.getContext('2d');
+        canvas_context.clearRect(0, 0, canvas.width, canvas.height);
+        canvas_context.drawImage(img, 0, 0, canvas.width, canvas.height);
+        var imgData = canvas_context.getImageData(0, 0, canvas.width, canvas.height);
+        chrome.browserAction.setIcon({imageData: imgData});
+    };
+    img.src = path;
+ 
+    this.scheduleRequest();
+  }
 
 };
 
