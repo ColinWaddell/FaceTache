@@ -38,12 +38,13 @@ function FaceStache() {
 
     startRequest: function(){
       this.getNotificationCount(
-        this.getNotificationSuccess,
-        this.requestError
+        this.getNotificationSuccess, //success handler
+        this.requestError // error handler
       );
     },
 
     requestError: function(){
+      console.log("error getting feed data");
       this.setIcon(-1);
       this.scheduleRequest();
     },
