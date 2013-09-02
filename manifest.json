@@ -1,5 +1,5 @@
 {
-  "name": "FaceStache : Facebook Status Machine",
+  "name": "FaceStache : A Manly Facebook Notification Plugin",
   "version": "0.0.1",
   "manifest_version": 2,
   "description": "The fuzzier the face, the more notifications you have waiting on you.",
@@ -9,7 +9,7 @@
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
   },
-  "default_locale": "en",
+  //"default_locale": "en",
   "background": {
     "scripts": [
       "js/jquery/jquery.min.js",
