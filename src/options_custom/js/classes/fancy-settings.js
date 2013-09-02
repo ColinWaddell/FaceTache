@@ -13,11 +13,8 @@
             $("favicon").set("href", icon);
             $("icon").set("src", icon);
             $("settings-label").set("text", (i18n.get("settings") || "Settings"));
-            $("search-label").set("text", (i18n.get("search") || "Search"));
-            $("search").set("placeholder", (i18n.get("search") || "Search") + "...");
             
             this.tab = new Tab($("tab-container"), $("content"));
-            this.search = new Search($("search"), $("search-result-container"));
         },
         
         "create": function (params) {
@@ -34,7 +31,6 @@
                 
                 tab.content = this.tab.create();
                 tab.content.tab.set("text", params.tab);
-                this.search.bind(tab.content.tab);
                 
                 tab.content = tab.content.content;
                 (new Element("h2", {
@@ -71,7 +67,6 @@
             
             // Create and index the setting
             bundle = group.setting.create(params);
-            this.search.add(bundle);
             
             return bundle;
         },
@@ -110,10 +105,8 @@
                 if (width < maxWidth) {
                     if (type === "button" || type === "slider") {
                         setting.element.setStyle("margin-left", (maxWidth - width + 2) + "px");
-                        setting.search.element.setStyle("margin-left", (maxWidth - width + 2) + "px");
                     } else {
                         setting.element.setStyle("margin-left", (maxWidth - width) + "px");
-                        setting.search.element.setStyle("margin-left", (maxWidth - width) + "px");
                     }
                 }
             });

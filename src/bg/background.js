@@ -18,6 +18,16 @@ function FaceStache() {
       this.scheduleRequest(0);
     },
 
+    initHooks: function(){
+      $(window).bind('storage', this.refreshSettings.bind(this) );
+    },
+
+    browserActions: function(){
+      chrome.browserAction.onClicked.addListener(function(windowId) {
+        chrome.tabs.create({url: this.settings.url});
+      }.bind(this));              
+    },
+
     getLocalSettings: function(){
       var poll = localStorage["store.settings.selectRefresh"];
       if (poll !== undefined){
@@ -34,16 +44,6 @@ function FaceStache() {
       this.getLocalSettings();
       window.clearTimeout(this.timer);
       this.scheduleRequest(0);
-    },
-
-    initHooks: function(){
-      $(window).bind('storage', this.refreshSettings.bind(this) );
-    },
-
-    browserActions: function(){
-      chrome.browserAction.onClicked.addListener(function(windowId) {
-        chrome.tabs.create({url: this.settings.url});
-      }.bind(this));              
     },
 
     scheduleRequest: function(timeout){
