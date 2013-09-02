@@ -7,7 +7,7 @@ function FaceStache() {
     //"sample_setting": "This is how you use Store.js to remember values"
   /*}),*/
 
-  plugin = {
+  var plugin = {
 
     settings: {
       pollInterval: 30 * 1000,
