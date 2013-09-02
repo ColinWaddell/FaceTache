@@ -1,11 +1,5 @@
-// if you checked "fancy-settings" in extensionizr.com, uncomment this lines
-
 
 function FaceStache() {
-
-  /*saved_settings: new Store("settings", {*/
-    //"sample_setting": "This is how you use Store.js to remember values"
-  /*}),*/
 
   var plugin = {
 
@@ -18,8 +12,32 @@ function FaceStache() {
 
     init: function(){
       console.log('init');
+      this.getLocalSettings();
       this.browserActions();
+      this.initHooks();
       this.scheduleRequest(0);
+    },
+
+    getLocalSettings: function(){
+      var poll = localStorage["store.settings.selectRefresh"];
+      if (poll !== undefined){
+        poll = parseInt(poll.replace(/['"]/g,''), 10);
+        if (!isNaN(poll)){
+          this.settings.pollInterval = poll;
+        }
+      }
+
+      this.scheduleRequest();    
+    },
+
+    refreshSettings: function(){
+      this.getLocalSettings();
+      window.clearTimeout(this.timer);
+      this.scheduleRequest(0);
+    },
+
+    initHooks: function(){
+      $(window).bind('storage', this.refreshSettings.bind(this) );
     },
 
     browserActions: function(){
@@ -33,7 +51,7 @@ function FaceStache() {
         timeout = this.settings.pollInterval;
       }
 
-      window.setTimeout(this.startRequest.bind(this), timeout);   
+      this.timer = window.setTimeout(this.startRequest.bind(this), timeout);   
     },
 
     startRequest: function(){

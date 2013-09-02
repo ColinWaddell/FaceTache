@@ -13,6 +13,7 @@
   "background": {
     "scripts": [
       "js/jquery/jquery.min.js",
+      "src/options_custom/lib/store.js",
       "src/bg/background.js"
     ],
     "persistent": true
