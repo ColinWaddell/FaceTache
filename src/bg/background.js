@@ -62,7 +62,7 @@ function FaceStache() {
         console.log("Not logged in");
       }
       else{
-        console.log("You have " + count + " notification." );
+        console.log("You have " + count + " notification.");
       }
 
       this.setIcon(count);
@@ -98,7 +98,8 @@ function FaceStache() {
 
   $.extend(this, plugin);
   this.init();
-}
+
+} //FaceTache
 
 var faceTache = new FaceStache();
 
