@@ -3,6 +3,7 @@ function FaceStache() {
 
   var plugin = {
     
+    // Used as semaphor for the refresh timer
     _request_processed: true, 
 
     settings: {
