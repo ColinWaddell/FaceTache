@@ -1,6 +1,6 @@
 {
   "name": "FaceStache : A Manly Facebook Notification Plugin",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "manifest_version": 2,
   "description": "The fuzzier the face, the more notifications you have waiting on you.",
   "homepage_url": "http://colinwaddell.com",
