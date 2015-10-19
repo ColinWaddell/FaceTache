@@ -10,7 +10,8 @@ function FaceStache() {
       pollInterval: 30 * 1000,
       url: "https://www.facebook.com/index.php",
       nIcons: 5,
-      beard: "icons/beard.png"
+      beard19: "icons/beard19.svg",
+      beard38: "icons/beard38.svg"
     },
 
     init: function(){
@@ -106,7 +107,6 @@ function FaceStache() {
       var imgpos = count + 1;
 
       var img = new Image();
-      img.count = count;
 
       img.onerror = function() {
           console.error("Could not load icon '" + path + "'.");
@@ -119,10 +119,13 @@ function FaceStache() {
           var canvas_context = canvas.getContext('2d');
           canvas_context.clearRect(0, 0, img.width, img.height);
           canvas_context.drawImage(img, 0 , 0, img.width, img.height);
-          var imgData = canvas_context.getImageData( imgpos*canvas.height , 0, 19, 19);
-          chrome.browserAction.setIcon({imageData: imgData});
+          var imgData38 = canvas_context.getImageData( imgpos*canvas.height , 0, 38, 38);
+          
+          canvas_context.scale(0.5, 0.5);
+          var imgData19 = canvas_context.getImageData( imgpos*canvas.height , 0, 19, 19);
+          chrome.browserAction.setIcon({imageData: {"19": imgData19, "38": imgData38}});
       };
-      img.src = this.settings.beard;
+      img.src = this.settings.beard38;
     }
   }; //plugin
 
