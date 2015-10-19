@@ -2,6 +2,8 @@
 function FaceStache() {
 
   var plugin = {
+    
+    _request_processed: true, 
 
     settings: {
       pollInterval: 30 * 1000,
@@ -35,9 +37,7 @@ function FaceStache() {
         if (!isNaN(poll)){
           this.settings.pollInterval = poll;
         }
-      }
-
-      this.scheduleRequest();    
+      }  
     },
 
     refreshSettings: function(){
@@ -46,15 +46,26 @@ function FaceStache() {
       this.scheduleRequest(0);
     },
 
-    scheduleRequest: function(timeout){
+    scheduleRequest: function(timeout){      
+      if(timeout===0){
+        this.startRequest();
+        return;
+      }
+      
       if (timeout === null || timeout === undefined || timeout === '') {
         timeout = this.settings.pollInterval;
       }
+      
+      if (!this._request_processed){
+        return;
+      }
+      this._request_processed = false;
 
       this.timer = window.setTimeout(this.startRequest.bind(this), timeout);   
     },
 
     startRequest: function(){
+      this._request_processed = true;
       this.getNotificationCount(
         this.getNotificationSuccess, //success handler
         this.requestError // error handler
