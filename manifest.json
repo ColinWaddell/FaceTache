@@ -1,5 +1,5 @@
 {
-  "name": "FaceStache : A Manly Facebook Notification Plugin",
+  "name": "FaceStache : A Fuzzy Facebook Notifier",
   "version": "0.0.3",
   "manifest_version": 2,
   "description": "The fuzzier the face, the more notifications you have waiting on you.",
