@@ -34,8 +34,8 @@
 
 #icon {
     position: absolute;
-    width: 30px;
-    height: 30px;
+    width: 48px;
+    height: 48px;
     top: 12px;
     left: 12px;
 }
@@ -50,7 +50,7 @@
 
 #tab-container {
     position: absolute;
-    top: 50px;
+    top: 72px;
     left: 0;
     right: 0;
     bottom: 0;
