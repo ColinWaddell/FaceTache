@@ -10,7 +10,7 @@ function FaceStache() {
       pollInterval: 30 * 1000,
       url: "https://www.facebook.com/index.php",
       nIcons: 5,
-      beard19: "icons/beard19.svg",
+      beard19: "icons/beard.png",
       beard38: "icons/beard38.svg"
     },
 
@@ -106,26 +106,41 @@ function FaceStache() {
 
       var imgpos = count + 1;
 
-      var img = new Image();
+      var img19 = new Image();
+      var img38 = new Image();
+      var imgData19;
+      var imgData38;
 
-      img.onerror = function() {
+      img19.onerror = function() {
           console.error("Could not load icon '" + path + "'.");
       };
-      img.onload = function() {
+      img19.onload = function() {
           var canvas = document.createElement("canvas");
-          canvas.width = img.width; 
-          canvas.height = img.height;
+          canvas.width = img19.width; 
+          canvas.height = img19.height;
 
           var canvas_context = canvas.getContext('2d');
-          canvas_context.clearRect(0, 0, img.width, img.height);
-          canvas_context.drawImage(img, 0 , 0, img.width, img.height);
-          var imgData38 = canvas_context.getImageData( imgpos*canvas.height , 0, 38, 38);
-          
-          canvas_context.scale(0.5, 0.5);
-          var imgData19 = canvas_context.getImageData( imgpos*canvas.height , 0, 19, 19);
-          chrome.browserAction.setIcon({imageData: {"19": imgData19, "38": imgData38}});
+          canvas_context.clearRect(0, 0, img19.width, img19.height);
+          canvas_context.drawImage(img19, 0 , 0, img19.width, img19.height);
+          imgData19 = canvas_context.getImageData( imgpos*canvas.height , 0, 19, 19);        
       };
-      img.src = this.settings.beard38;
+      img19.src = this.settings.beard19;
+
+      img38.onerror = function() {
+          console.error("Could not load icon '" + path + "'.");
+      };
+      img38.onload = function() {
+          var canvas = document.createElement("canvas");
+          canvas.width = img38.width; 
+          canvas.height = img38.height;
+
+          var canvas_context = canvas.getContext('2d');
+          canvas_context.clearRect(0, 0, img38.width, img38.height);
+          canvas_context.drawImage(img38, 0 , 0, img38.width, img38.height);
+          var imgData38 = canvas_context.getImageData( imgpos*canvas.height , 0, 38, 38);
+          chrome.browserAction.setIcon({imageData: {"19": imgData19, "38": imgData38}});         
+      };
+      img38.src = this.settings.beard38;
     }
   }; //plugin
 
