@@ -5,3 +5,4 @@ My very own Facebook notification status thingy. Quickly glance at the plugin ic
 
 ![FaceTache](https://github.com/ColinWaddell/FaceTache/blob/master/icons/beard.png?raw=true "FaceTache Notifiers")
 
+[Find it on the Google Store here](https://chrome.google.com/webstore/detail/facestache-a-fuzzy-facebo/ipjkailgioejhdhopcflghnalbhbkmme)
